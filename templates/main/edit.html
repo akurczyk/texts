@@ -1,0 +1,35 @@
+{% extends 'main/../base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <div class="card bg-light my_card">
+        <h5 class="card-header my_card_header">Edytuj</h5>
+        <div class="card-body">
+
+            {% if no_rights %}
+
+                <div class="alert alert-danger form_alert" role="alert">
+                    Nie masz uprawnień do zmian w tekście.
+                </div>
+
+            {% elif submitted %}
+
+                <div class="alert alert-success form_alert" role="alert">
+                    Tekst został zmieniony.
+                </div>
+
+            {% else %}
+
+                <form role="form" method="post" class="my_form">
+                    {% csrf_token %}
+                    {{ form|bootstrap }}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Zmień</button>
+                    </div>
+                </form>
+
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

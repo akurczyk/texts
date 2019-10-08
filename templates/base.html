@@ -1,0 +1,81 @@
+{% load static %}
+<!doctype html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Teksty</title>
+        <link href="{% static 'main/bootstrap.min.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <link href="{% static 'main/style.css' %}" rel="stylesheet">
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href="/">Teksty</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Rozwiń">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            {% with site_id=request.resolver_match.url_name %}
+                <div class="collapse navbar-collapse" id="nav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item{% if site_id == 'index' %} active{% endif %}"><a class="nav-link" href="{% url 'index' %}">Główna</a></li>
+                        <li class="nav-item{% if site_id == 'waiting' %} active{% endif %}"><a class="nav-link" href="{% url 'waiting' %}">Poczekalnia</a></li>
+                        <li class="nav-item{% if site_id == 'best' %} active{% endif %}"><a class="nav-link" href="{% url 'best' %}">Najlepsze</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'random' %}">Losuj</a></li>
+                        <li class="nav-item{% if site_id == 'add' %} active{% endif %}"><a class="nav-link" href="{% url 'add' %}">Dodaj</a></li>
+                    </ul>
+
+                    <ul class="navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item{% if site_id == 'user_profile' %} active{% endif %}"><a class="nav-link" href="#">Zalogowany: {{ user.username }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Wyloguj się</a></li>
+                        {% else %}
+                            <li class="nav-item{% if site_id == 'login' %} active{% endif %}"><a class="nav-link" href="{% url 'login' %}">Logowanie</a></li>
+                            <li class="nav-item{% if site_id == 'signup' %} active{% endif %}"><a class="nav-link" href="{% url 'signup' %}">Rejestracja</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endwith %}
+        </nav>
+
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    {% block content %}{% endblock %}
+
+                </div>
+                <div class="col-md-4">
+
+                    <div class="card bg-light my_panel">
+                        <h5 class="card-header my_panel_header">Nagłówek</h5>
+                        <div class="card-body">
+                            <p class="card-text">Treść...</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <script>
+            function ajax(element, url) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if(this.readyState == 4 && this.status == 200) {
+                        document.getElementById(element).innerHTML = this.responseText;
+                    }
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+        </script>
+
+        <script src="{% static 'main/jquery-3.3.1.slim.min.js' %}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="{% static 'main/jquery-slim.min.js' %}"><\/script>')</script>
+        <script src="{% static 'main/popper.min.js' %}"></script>
+        <script src="{% static 'main/bootstrap.min.js' %}"></script>
+    </body>
+</html>

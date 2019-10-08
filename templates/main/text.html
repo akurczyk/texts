@@ -1,0 +1,32 @@
+{% extends 'main/../base.html' %}
+
+{% block content %}
+    <div class="card bg-light my_card">
+        <h5 class="card-header my_card_header">{{ text.title }}</h5>
+        <div class="card-body">
+            <img src="/get_image/{{ text.id }}" style="width: 100%;">
+            <p class="card-text text_info">
+                <small class="text-muted">
+                    Autor: <b>{{ text.author }}</b><br>
+                    Dodano: <b>{{ text.added_at }}</b><br>
+                    {% if text.published %}Opublikowano: <b>{{ text.published_at }}</b><br>{% endif %}
+                    {% if text.updated %}Zmodyfikowano: <b>{{ text.updated_at }}</b>{% endif %}
+                </small>
+            </p>
+        </div>
+        <div class="card-footer my_card_footer">
+            <div class="btn-group my_btn" role="group">
+                <a href="{% url 'vote' 'plus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'plus' text.id %}'); return false;"><i class="fas fa-plus"></i></a>
+                <button id="votes-{{ text.pk }}" class="btn btn-primary" disabled>{{ text.votes }}</button>
+                <a href="{% url 'vote' 'minus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'minus' text.id %}'); return false;"><i class="fas fa-minus"></i></a>
+            </div>
+
+            {% if can_edit %} <a href="{% url 'edit' text.id %}" class="btn btn-secondary my_btn">Edytuj</a>{% endif %}
+            {% if can_remove %} <a href="{% url 'remove' text.id %}" class="btn btn-danger my_btn">Usuń</a>{% endif %}
+            {% if can_publish %} <a href="{% url 'publish' text.id %}" class="btn btn-secondary my_btn_last">Opublikuj na głównej</a>{% endif %}
+            {% if can_unpublish %} <a href="{% url 'unpublish' text.id %}" class="btn btn-danger my_btn_last">Wycofaj z głównej</a>{% endif %}
+        </div>
+    </div>
+
+    <a name="comments"></a>
+{% endblock %}

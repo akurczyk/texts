@@ -1,0 +1,48 @@
+{% extends 'main/../base.html' %}
+
+{% block content %}
+    {% for text in texts %}
+        <div class="card bg-light my_card">
+            <h5 class="card-header my_card_header"><a href="{% url 'show' text.id %}" class="title_link">{{ text.title }}</a></h5>
+            <div class="card-body">
+                <a href="{% url 'show' text.id %}"><img src="/get_image/{{ text.id }}" style="width: 100%;"></a>
+                <p class="card-text text_info">
+                    <small class="text-muted">
+                        Autor: <b>{{ text.author }}</b>
+                    </small>
+                </p>
+            </div>
+            <div class="card-footer my_card_footer">
+                <a href="{% url 'show' text.id %}#comments" class="btn btn-primary my_btn">Komentarze (30)</a>
+
+                <div class="btn-group my_btn_last" role="group">
+                    <a href="{% url 'vote' 'plus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'plus' text.id %}'); return false;"><i class="fas fa-plus"></i></a>
+                    <button id="votes-{{ text.pk }}" class="btn btn-primary" disabled>{{ text.votes }}</button>
+                    <a href="{% url 'vote' 'minus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'minus' text.id %}'); return false;"><i class="fas fa-minus"></i></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="navigation">
+        {% if show_prev_pg %}
+            <a href="{% url request.resolver_match.url_name prev_pg_id %}" class="btn btn-info btn-lg" role="button">
+                <i class="fas fa-arrow-circle-left"></i><span class="d-none d-lg-inline"> Poprzednia strona</span>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-info btn-lg disabled">
+                <i class="fas fa-arrow-circle-left"></i><span class="d-none d-lg-inline"> Poprzednia strona</span>
+            </button>
+        {% endif %}
+
+        {% if show_next_pg %}
+            <a href="{% url request.resolver_match.url_name next_pg_id %}" class="btn btn-info btn-lg float-right" role="button">
+                <span class="d-none d-lg-inline">Następna strona</span> <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-info btn-lg float-right disabled">
+                <span class="d-none d-lg-inline">Następna strona</span> <i class="fas fa-arrow-circle-right"></i>
+            </button>
+        {% endif %}
+    </div>
+{% endblock %}
