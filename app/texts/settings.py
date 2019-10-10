@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v&ukp-6c74k-qs^dispkwrrzgsa86(&x25fq7i6s=lw32p5og='
+SECRET_KEY = os.environ.get('SECRET_KEY', 'secret')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', 1))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -78,25 +78,33 @@ WSGI_APPLICATION = 'texts.wsgi.application'
 
 DATABASES = {
     'default': {
+        # Docker
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get('SQL_USER'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD'),
+        'HOST': os.environ.get('SQL_HOST'),
+        'PORT': os.environ.get('SQL_PORT'),
+
         # SQLite3
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
         # MySQL (requires pipenv install mysqlclient)
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'texts',
-        'USER': 'olo',
-        'PASSWORD': 'olo',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'texts',
+        # 'USER': 'olo',
+        # 'PASSWORD': 'olo',
+        # 'HOST': 'localhost',
+        # 'PORT': '3306',
 
-        # PostgreSQL (requires pipenv install psycopg2)
-        #'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'texts',
-        #'USER': 'texts',
-        #'PASSWORD': 'zaq1@WSX',
-        #'HOST': 'localhost',
-        #'PORT': '5432',
+        # PostgreSQL (requires pipenv install psycopg2-binary)
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'texts',
+        # 'USER': 'olo',
+        # 'PASSWORD': 'olo',
+        # 'HOST': 'localhost',
+        # 'PORT': '5432',
     }
 }
 
@@ -124,13 +132,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'pl-pl'
-
 TIME_ZONE = 'Europe/Warsaw'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -138,14 +142,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-CELERY_BACKEND_URL = 'redis://localhost'
-CELERY_BROKER_URL = 'redis://localhost'
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+CELERY_BACKEND_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'

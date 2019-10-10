@@ -1,2 +1,0 @@
-#!/bin/bash
-celery -A texts worker -l INFO

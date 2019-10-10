@@ -3,10 +3,12 @@ billiard==3.6.1.0
 celery==4.3.0
 Django==2.2.6
 django-bootstrap-form==3.4
+gunicorn==19.9.0
 imgkit==1.0.2
 importlib-metadata==0.23
 kombu==4.6.5
 more-itertools==7.2.0
+psycopg2-binary==2.8.3
 pytz==2019.3
 redis==3.3.8
 sqlparse==0.3.0
