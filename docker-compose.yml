@@ -18,7 +18,7 @@ services:
 
   celery:
     build: ./app
-    command: celery -A texts worker -l INFO
+    command: watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery worker --app=texts.celery.app --concurrency=1 --loglevel=INFO
     volumes:
       - ./app:/app
     env_file: .env

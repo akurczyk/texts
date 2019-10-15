@@ -42,12 +42,13 @@ def process_text(text_id):
     <head>
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400&amp;subset=latin-ext" rel="stylesheet">
         <style>
-            html, body {{
+            html {{
                 margin: 0;
                 padding: 0;
                 width: 688px;
                 background-color: {color};
                 background-image: url("https://www.transparenttextures.com/patterns/{pattern}.png");
+                zoom: 2;
             }}
             p {{
                 margin: 20px;
@@ -84,7 +85,7 @@ def process_text(text_id):
     options = {
         'format': 'png',
         'encoding': 'UTF-8',
-        'zoom': '2',
+        'width': '688',
         'quiet': '',
     }
 
