@@ -38,8 +38,10 @@ def process_text(text_id):
     ]
 
     template = '''
+    <!DOCYPE html5>
     <html>
     <head>
+        <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400&amp;subset=latin-ext" rel="stylesheet">
         <style>
             html {{
@@ -51,7 +53,7 @@ def process_text(text_id):
                 zoom: 2;
             }}
             p {{
-                margin: 20px;
+                margin: 10px;
                 padding: 0;
                 font-family: 'Roboto Slab', serif;
                 font-size: 18px;
