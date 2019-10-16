@@ -18,6 +18,7 @@ class Text(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     processed = models.BooleanField(default=False)
     file_name = models.CharField(max_length=200)
+    file_name_mini = models.CharField(max_length=200)
     published = models.BooleanField(default=False)
     updated = models.BooleanField(default=False)
     added_at = models.DateTimeField(auto_now_add=True)
@@ -44,8 +45,9 @@ class Text(models.Model):
         self.published = False
         self.save()
 
-    def add_processed_image(self, file_name):
+    def add_processed_image(self, file_name, file_name_mini):
         self.file_name = file_name
+        self.file_name_mini = file_name_mini
         self.processed = True
         self.save()
 

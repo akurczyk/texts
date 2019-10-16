@@ -1,4 +1,3 @@
-import random
 from django.http import HttpResponseNotFound, HttpResponseForbidden, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
@@ -61,13 +60,13 @@ def best(request, page_id=1):
 def random_text(request):
     all_texts = Text.objects\
         .filter(processed=True)\
-        .filter(published=True)
+        .filter(published=True)\
+        .order_by('?')
 
     if all_texts.count() == 0:
-        return HttpResponseNotFound();
+        return HttpResponseNotFound()
 
-    random_index = random.randrange(0, all_texts.count())
-    random_text_id = all_texts[random_index].id
+    random_text_id = all_texts.first().id
 
     return redirect('show', text_id=random_text_id)
 
@@ -158,6 +157,10 @@ def edit(request, text_id):
         text.updated = True
         text.updated_at = now()
         text.save()
+
+        FileSystemStorage().delete(text.file_name)
+        FileSystemStorage().delete(text.file_name_mini)
+
         process_text.delay(text.id)
         submitted = True
 
@@ -196,6 +199,8 @@ def remove(request, text_id):
 
     if request.user.has_perm('main.remove_text')\
             or (request.user == text.author and not text.published):
+        FileSystemStorage().delete(text.file_name)
+        FileSystemStorage().delete(text.file_name_mini)
         text.delete()
 
     return redirect('index')

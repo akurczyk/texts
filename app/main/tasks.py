@@ -50,7 +50,7 @@ def process_text(text_id):
                 width: 688px;
                 background-color: {color};
                 background-image: url("https://www.transparenttextures.com/patterns/{pattern}.png");
-                zoom: 2;
+                zoom: {scale};
             }}
             p {{
                 margin: 10px;
@@ -78,19 +78,20 @@ def process_text(text_id):
     for line in text.content.split('\n'):
         content += '<p>{line}</p>'.format(line=line.strip())
 
-    html = template.format(
-        color=color_html,
-        pattern=random.choice(patterns),
-        text=content,
-    )
+    html = template.format(color=color_html, pattern=random.choice(patterns), scale=2, text=content)
+    html_mini = template.format(color=color_html, pattern=random.choice(patterns), scale=0.45, text=content)
 
     options = {
         'format': 'png',
         'encoding': 'UTF-8',
-        'width': '688',
+        'width': '1',
         'quiet': '',
     }
 
     image = imgkit.from_string(html, False, options=options)
-    file_name = FileSystemStorage().save(str(text_id) + '.png', ContentFile(image))
-    text.add_processed_image(file_name)
+    file_name = FileSystemStorage().save(f'{text_id}.png', ContentFile(image))
+
+    image_mini = imgkit.from_string(html, False, options=options)
+    file_name_mini = FileSystemStorage().save(f'{text_id}_mini.png', ContentFile(image_mini))
+
+    text.add_processed_image(file_name, file_name_mini)

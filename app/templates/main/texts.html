@@ -5,7 +5,7 @@
         <div class="card bg-light my_card">
             <h5 class="card-header my_card_header"><a href="{% url 'show' text.id %}" class="title_link">{{ text.title }}</a></h5>
             <div class="card-body">
-                <a href="{% url 'show' text.id %}"><img src="/get_image/{{ text.id }}" style="width: 100%;"></a>
+                <a href="{% url 'show' text.id %}"><img src="/media/{{ text.file_name }}" style="width: 100%;"></a>
                 <p class="card-text text_info">
                     <small class="text-muted">
                         Autor: <b>{{ text.author }}</b>

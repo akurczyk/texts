@@ -50,9 +50,50 @@
                 <div class="col-md-4">
 
                     <div class="card bg-light my_panel">
-                        <h5 class="card-header my_panel_header">Nagłówek</h5>
-                        <div class="card-body">
-                            <p class="card-text">Treść...</p>
+                        <h5 class="card-header my_panel_header">3 losowe teksty</h5>
+                        <div class="card-body" style="padding: 0 1.25rem;">
+
+                            {% load main_extras %}
+                            {% get_3_random_texts as random_texts %}
+
+                            {% for text in random_texts %}
+                                <a href="{% url 'show' text.id %}" style="display: block; margin: 1.25rem 0;">
+                                    <img src="/media/{{ text.file_name_mini }}" style="width: 100%;">
+                                </a>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                    <div class="card bg-light my_panel">
+                        <h5 class="card-header my_panel_header">3 najlepsze teksty</h5>
+                        <div class="card-body" style="padding: 0 1.25rem;">
+
+                            {% load main_extras %}
+                            {% get_3_best_texts as best_texts %}
+
+                            {% for text in best_texts %}
+                                <a href="{% url 'show' text.id %}" style="display: block; margin: 1.25rem 0;">
+                                    <img src="/media/{{ text.file_name_mini }}" style="width: 100%;">
+                                </a>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                    <div class="card bg-light my_panel">
+                        <h5 class="card-header my_panel_header">3 najnowsze teksty</h5>
+                        <div class="card-body" style="padding: 0 1.25rem;">
+
+                            {% load main_extras %}
+                            {% get_3_newest_texts as newest_texts %}
+
+                            {% for text in newest_texts %}
+                                <a href="{% url 'show' text.id %}" style="display: block; margin: 1.25rem 0;">
+                                    <img src="/media/{{ text.file_name_mini }}" style="width: 100%;">
+                                </a>
+                            {% endfor %}
+
                         </div>
                     </div>
 
