@@ -16,15 +16,21 @@
         </div>
         <div class="card-footer my_card_footer">
             <div class="btn-group my_btn" role="group">
-                <a href="{% url 'vote' 'plus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'plus' text.id %}'); return false;"><i class="fas fa-plus"></i></a>
+                <a href="{% url 'vote' 'plus' text.id %}" class="btn btn-primary"
+                   onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'plus' text.id %}'); return false;">
+                    <i class="fas fa-plus"></i>
+                </a>
                 <button id="votes-{{ text.pk }}" class="btn btn-primary" disabled>{{ text.votes }}</button>
-                <a href="{% url 'vote' 'minus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'minus' text.id %}'); return false;"><i class="fas fa-minus"></i></a>
+                <a href="{% url 'vote' 'minus' text.id %}" class="btn btn-primary"
+                   onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'minus' text.id %}'); return false;">
+                    <i class="fas fa-minus"></i>
+                </a>
             </div>
 
-            {% if can_edit %} <a href="{% url 'edit' text.id %}" class="btn btn-secondary my_btn">Edytuj</a>{% endif %}
-            {% if can_remove %} <a href="{% url 'remove' text.id %}" class="btn btn-danger my_btn">Usuń</a>{% endif %}
-            {% if can_publish %} <a href="{% url 'publish' text.id %}" class="btn btn-secondary my_btn_last">Opublikuj na głównej</a>{% endif %}
-            {% if can_unpublish %} <a href="{% url 'unpublish' text.id %}" class="btn btn-danger my_btn_last">Wycofaj z głównej</a>{% endif %}
+            {% if can_edit %}<a href="{% url 'edit' text.id %}" class="btn btn-secondary my_btn">Edytuj</a>{% endif %}
+            {% if can_remove %}<a href="{% url 'remove' text.id %}" class="btn btn-danger my_btn">Usuń</a>{% endif %}
+            {% if can_publish %}<a href="{% url 'publish' text.id %}" class="btn btn-secondary my_btn_last">Opublikuj na głównej</a>{% endif %}
+            {% if can_unpublish %}<a href="{% url 'unpublish' text.id %}" class="btn btn-danger my_btn_last">Wycofaj z głównej</a>{% endif %}
         </div>
     </div>
 

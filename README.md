@@ -14,4 +14,4 @@ List of the things that has to be done:
 1. Comments
 1. Comments pagination
 1. User profile view
-1. Edit user profile view
+1. REST API

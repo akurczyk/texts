@@ -50,6 +50,11 @@ body {
     margin: 2rem 0 2rem 0;
 }
 
+.main_alert {
+    margin: 2rem 0 2rem 0;
+    box-shadow: 0 0.25rem 2rem 0px rgba(0, 0, 0, .1);
+}
+
 .form_alert {
     line-height: 1;
     margin-bottom: 0;

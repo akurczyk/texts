@@ -16,9 +16,15 @@
                 <a href="{% url 'show' text.id %}#comments" class="btn btn-primary my_btn">Komentarze (30)</a>
 
                 <div class="btn-group my_btn_last" role="group">
-                    <a href="{% url 'vote' 'plus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'plus' text.id %}'); return false;"><i class="fas fa-plus"></i></a>
+                    <a href="{% url 'vote' 'plus' text.id %}" class="btn btn-primary"
+                       onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'plus' text.id %}'); return false;">
+                        <i class="fas fa-plus"></i>
+                    </a>
                     <button id="votes-{{ text.pk }}" class="btn btn-primary" disabled>{{ text.votes }}</button>
-                    <a href="{% url 'vote' 'minus' text.id %}" class="btn btn-primary" onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'minus' text.id %}'); return false;"><i class="fas fa-minus"></i></a>
+                    <a href="{% url 'vote' 'minus' text.id %}" class="btn btn-primary"
+                       onclick="ajax('votes-{{ text.id }}', '{% url 'vote' 'minus' text.id %}'); return false;">
+                        <i class="fas fa-minus"></i>
+                    </a>
                 </div>
             </div>
         </div>

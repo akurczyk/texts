@@ -1,0 +1,20 @@
+{% extends 'main/../base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <div class="card bg-light my_card">
+        <h5 class="card-header my_card_header">Edytuj profil</h5>
+        <div class="card-body">
+
+            <form role="form" method="post" class="my_form">
+                {% csrf_token %}
+                {{ user_form|bootstrap }}
+                {{ profile_form|bootstrap }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

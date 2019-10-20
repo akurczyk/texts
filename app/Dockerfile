@@ -4,4 +4,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY . /app
 RUN apk update && apk add wkhtmltopdf postgresql-dev gcc python3-dev musl-dev && rm -rf /var/cache/apk
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt

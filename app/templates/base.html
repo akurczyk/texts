@@ -29,7 +29,8 @@
 
                     <ul class="navbar-nav navbar-right">
                         {% if user.is_authenticated %}
-                            <li class="nav-item{% if site_id == 'user_profile' %} active{% endif %}"><a class="nav-link" href="#">Zalogowany: {{ user.username }}</a></li>
+                            <li class="nav-item{% if site_id == 'user_texts' or site_id == 'user_comments' %} active{% endif %}"><a class="nav-link" href="#">Zalogowany: {{ user.username }}</a></li>
+                            <li class="nav-item{% if site_id == 'edit_user' %} active{% endif %}"><a class="nav-link" href="{% url 'edit_user' %}">Edytuj profil</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Wyloguj się</a></li>
                         {% else %}
                             <li class="nav-item{% if site_id == 'login' %} active{% endif %}"><a class="nav-link" href="{% url 'login' %}">Logowanie</a></li>
@@ -43,6 +44,24 @@
         <main role="main" class="container">
             <div class="row">
                 <div class="col-md-8">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags and message.tags == 'debug' %}
+                                <div class="alert alert-primary main_alert" role="alert">{{ message }}</div>
+                            {% elif message.tags and message.tags == 'info' %}
+                                <div class="alert alert-secondary main_alert" role="alert">{{ message }}</div>
+                            {% elif message.tags and message.tags == 'success' %}
+                                <div class="alert alert-success main_alert" role="alert">{{ message }}</div>
+                            {% elif message.tags and message.tags == 'warning' %}
+                                <div class="alert alert-warning main_alert" role="alert">{{ message }}</div>
+                            {% elif message.tags and message.tags == 'error' %}
+                                <div class="alert alert-danger main_alert" role="alert">{{ message }}</div>
+                            {% else %}
+                                <div class="alert main_alert" role="alert">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
 
                     {% block content %}{% endblock %}
 
@@ -115,7 +134,7 @@
         </script>
 
         <script src="{% static 'main/jquery-3.3.1.slim.min.js' %}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="{% static 'main/jquery-slim.min.js' %}"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="{% static ';main/jquery-slim.min.js;' %}"><\/script>';)</script>
         <script src="{% static 'main/popper.min.js' %}"></script>
         <script src="{% static 'main/bootstrap.min.js' %}"></script>
     </body>

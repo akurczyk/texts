@@ -1,10 +1,12 @@
-from celery import shared_task
-import random
-import imgkit
 import colorsys
-from .models import Text
+import random
+
+import imgkit
+from celery import shared_task
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
+
+from .models import Text
 
 
 @shared_task
@@ -74,12 +76,11 @@ def process_text(text_id):
         int(color_values[2] * 255),
     )
 
+    pattern = random.choice(patterns)
+
     content = ''
     for line in text.content.split('\n'):
         content += '<p>{line}</p>'.format(line=line.strip())
-
-    html = template.format(color=color_html, pattern=random.choice(patterns), scale=2, text=content)
-    html_mini = template.format(color=color_html, pattern=random.choice(patterns), scale=0.45, text=content)
 
     options = {
         'format': 'png',
@@ -88,10 +89,12 @@ def process_text(text_id):
         'quiet': '',
     }
 
+    html = template.format(color=color_html, pattern=pattern, scale=2, text=content)
     image = imgkit.from_string(html, False, options=options)
     file_name = FileSystemStorage().save(f'{text_id}.png', ContentFile(image))
 
-    image_mini = imgkit.from_string(html, False, options=options)
+    html_mini = template.format(color=color_html, pattern=pattern, scale=0.9, text=content)
+    image_mini = imgkit.from_string(html_mini, False, options=options)
     file_name_mini = FileSystemStorage().save(f'{text_id}_mini.png', ContentFile(image_mini))
 
     text.add_processed_image(file_name, file_name_mini)

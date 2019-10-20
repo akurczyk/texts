@@ -1,14 +1,15 @@
-from django.http import HttpResponseNotFound, HttpResponseForbidden, HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
-from django.contrib.auth.models import User
+from django.http import HttpResponseNotFound, HttpResponseForbidden, HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.timezone import now
-from django.core.files.storage import FileSystemStorage
-from .models import Text
+
 from .forms import TextModelForm
+from .models import Text
 from .tasks import process_text
 
 
@@ -92,12 +93,6 @@ def show(request, text_id):
     return render(request, 'main/text.html', context)
 
 
-def get_image(request, text_id):
-    text = get_object_or_404(Text, pk=text_id)
-    file = FileSystemStorage().open(text.file_name)
-    return HttpResponse(content=file.read(), content_type='image/png')
-
-
 def vote(request, plus_or_minus, text_id):
     if plus_or_minus not in ('plus', 'minus'):
         return HttpResponseNotFound('You can only vote on plus or minus')
@@ -167,7 +162,7 @@ def edit(request, text_id):
     context = {
         'form': form,
         'submitted': submitted,
-        'no_rights': no_rights
+        'no_rights': no_rights,
     }
 
     return render(request, 'main/edit.html', context)
