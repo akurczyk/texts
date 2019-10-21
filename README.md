@@ -10,8 +10,7 @@ How to run:
 1. Run ``docker-compose exec django python manage.py createsuperuser`` ans answer a few questions to create an admin account.
 1. Then go to ``http://127.0.0.1:8000`` and access the website.
 
-List of the things that has to be done:
+To do:
+1. REST API
 1. Comments
 1. Comments pagination
-1. User profile view
-1. REST API

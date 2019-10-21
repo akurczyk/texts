@@ -7,7 +7,7 @@
             <img src="/media/{{ text.file_name }}" style="width: 100%;">
             <p class="card-text text_info">
                 <small class="text-muted">
-                    Autor: <b>{{ text.author }}</b><br>
+                    Autor: <b><a href="{% url 'user_texts' text.author.id %}">{{ text.author }}</a></b><br>
                     Dodano: <b>{{ text.added_at }}</b><br>
                     {% if text.published %}Opublikowano: <b>{{ text.published_at }}</b><br>{% endif %}
                     {% if text.updated %}Zmodyfikowano: <b>{{ text.updated_at }}</b>{% endif %}

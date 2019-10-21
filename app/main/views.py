@@ -13,7 +13,7 @@ from .models import Text
 from .tasks import process_text
 
 
-def show_texts(request, site_id, all_texts, page_id):
+def show_texts(request, site_id, all_texts, page_id, author=None):
     paginator = Paginator(all_texts, 10)
     texts = paginator.get_page(page_id)
     last_page_id = paginator.num_pages
@@ -25,6 +25,7 @@ def show_texts(request, site_id, all_texts, page_id):
         'show_next_pg': True if current_page_id < last_page_id else False,
         'prev_pg_id': current_page_id - 1,
         'next_pg_id': current_page_id + 1,
+        'author': author,
     }
 
     return render(request, 'main/texts.html', context)
@@ -58,6 +59,20 @@ def best(request, page_id=1):
     return show_texts(request, 'best', all_texts, page_id)
 
 
+def user_texts(request, user_id, page_id=1):
+    print(user_id)
+    author = get_object_or_404(User, pk=user_id)
+
+    all_texts = Text.objects\
+        .filter(processed=True)\
+        .filter(published=True)\
+        .filter(author=user_id)\
+        .annotate(votes_count=Coalesce(Sum('vote__vote'), 0))\
+        .order_by('-id')
+
+    return show_texts(request, 'user_texts', all_texts, page_id, author)
+
+
 def random_text(request):
     all_texts = Text.objects\
         .filter(processed=True)\
@@ -88,6 +103,7 @@ def show(request, text_id):
         'can_remove': can_remove,
         'can_publish': can_publish,
         'can_unpublish': can_unpublish,
+        'author': text.author,
     }
 
     return render(request, 'main/text.html', context)

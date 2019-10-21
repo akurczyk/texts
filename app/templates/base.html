@@ -29,7 +29,7 @@
 
                     <ul class="navbar-nav navbar-right">
                         {% if user.is_authenticated %}
-                            <li class="nav-item{% if site_id == 'user_texts' or site_id == 'user_comments' %} active{% endif %}"><a class="nav-link" href="#">Zalogowany: {{ user.username }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user_texts' user.id %}">Zalogowany: {{ user.username }}</a></li>
                             <li class="nav-item{% if site_id == 'edit_user' %} active{% endif %}"><a class="nav-link" href="{% url 'edit_user' %}">Edytuj profil</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Wyloguj się</a></li>
                         {% else %}
@@ -67,6 +67,18 @@
 
                 </div>
                 <div class="col-md-4">
+
+                    {% if author %}
+                        <div class="card bg-light my_panel">
+                            <h5 class="card-header my_panel_header">Autor: <a href="{% url 'user_texts' author.id %}">{{ author.username }}</a></h5>
+                            <div class="card-body" style="padding: 0 1.25rem;">
+
+                                <p>Motto: {{ author.profile.bio }}</p>
+                                <p>Lokalizacja: {{ author.profile.location }}</p>
+
+                            </div>
+                        </div>
+                    {% endif %}
 
                     <div class="card bg-light my_panel">
                         <h5 class="card-header my_panel_header">3 losowe teksty</h5>

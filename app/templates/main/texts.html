@@ -8,7 +8,7 @@
                 <a href="{% url 'show' text.id %}"><img src="/media/{{ text.file_name }}" style="width: 100%;"></a>
                 <p class="card-text text_info">
                     <small class="text-muted">
-                        Autor: <b>{{ text.author }}</b>
+                        Autor: <b><a href="{% url 'user_texts' text.author.id %}">{{ text.author }}</a></b>
                     </small>
                 </p>
             </div>

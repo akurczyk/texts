@@ -3,6 +3,10 @@ body {
     background-color: #f5f5f5;
 }
 
+p {
+    margin-top: 1rem;
+}
+
 .navbar {
     background-color: #3A0068!important;
 }
