@@ -34,7 +34,7 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Wyloguj się</a></li>
                         {% else %}
                             <li class="nav-item{% if site_id == 'login' %} active{% endif %}"><a class="nav-link" href="{% url 'login' %}">Logowanie</a></li>
-                            <li class="nav-item{% if site_id == 'signup' %} active{% endif %}"><a class="nav-link" href="{% url 'signup' %}">Rejestracja</a></li>
+                            <li class="nav-item{% if site_id == 'signup' %} active{% endif %}"><a class="nav-link" href="{% url 'create_user' %}">Rejestracja</a></li>
                         {% endif %}
                     </ul>
                 </div>

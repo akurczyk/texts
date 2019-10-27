@@ -1,4 +1,4 @@
-{% extends 'main/../base.html' %}
+{% extends 'base.html' %}
 {% load bootstrap %}
 
 {% block content %}
@@ -11,7 +11,22 @@
                 {{ user_form|bootstrap }}
                 {{ profile_form|bootstrap }}
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                    <button type="submit" class="btn btn-primary" name="action" value="profile_change">Zapisz</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="card bg-light my_card">
+        <h5 class="card-header my_card_header">Zmień hasło</h5>
+        <div class="card-body">
+
+            <form role="form" method="post" class="my_form">
+                {% csrf_token %}
+                {{ password_form|bootstrap }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" name="action" value="password_change">Zapisz</button>
                 </div>
             </form>
 

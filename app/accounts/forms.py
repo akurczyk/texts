@@ -7,7 +7,7 @@ from .models import Profile
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('username',)
 
 
 class ProfileForm(forms.ModelForm):
@@ -19,4 +19,4 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('bio', 'location')
+        fields = ('bio', 'location',)

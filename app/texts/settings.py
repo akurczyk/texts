@@ -90,7 +90,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
-        # MySQL (requires pipenv install mysqlclient)
+        # MySQL (requires mysqlclient)
         # 'ENGINE': 'django.db.backends.mysql',
         # 'NAME': 'texts',
         # 'USER': 'olo',
@@ -98,7 +98,7 @@ DATABASES = {
         # 'HOST': 'localhost',
         # 'PORT': '3306',
 
-        # PostgreSQL (requires pipenv install psycopg2-binary)
+        # PostgreSQL (requires psycopg2-binary)
         # 'ENGINE': 'django.db.backends.postgresql',
         # 'NAME': 'texts',
         # 'USER': 'olo',
@@ -138,21 +138,26 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
+# Static files
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Media files
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
-REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
-CELERY_BACKEND_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
-CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+# Redirect after login or logout to the homepage instead of Django Admin message page
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Currently we don't need sending any e-mails
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Celery settings
+
+CELERY_BACKEND_URL = os.environ.get('CELERY_BACKEND', 'redis://localhost:6379')
+CELERY_BROKER_URL = os.environ.get('CELERY_BACKEND', 'redis://localhost:6379')

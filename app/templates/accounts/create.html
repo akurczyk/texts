@@ -1,4 +1,4 @@
-{% extends 'main/../base.html' %}
+{% extends 'base.html' %}
 {% load bootstrap %}
 
 {% block content %}
@@ -8,7 +8,8 @@
 
             <form role="form" method="post" class="my_form">
                 {% csrf_token %}
-                {{ form|bootstrap }}
+                {{ user_form|bootstrap }}
+                {{ profile_form|bootstrap }}
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Utwórz konto</button>
                 </div>
