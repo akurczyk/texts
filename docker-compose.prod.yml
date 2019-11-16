@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+
+  postgres:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file: .env
+
+  redis:
+    image: redis:5.0.6-alpine
+    volumes:
+      - redis_data:/data
+
+  celery:
+    build: ./app
+    command: celery worker --app=texts.celery.app --concurrency=1
+    volumes:
+      - django_static_data:/app/static
+      - django_media_data:/app/media
+    env_file: .env
+    depends_on:
+      - redis
+      - postgres
+
+  django:
+    build: ./app
+    command: gunicorn texts.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - '8000'
+    volumes:
+      - django_static_data:/app/static
+      - django_media_data:/app/media
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    build: ./nginx
+    ports:
+      - '8000:80'
+    volumes:
+      - django_static_data:/usr/share/nginx/html/static
+      - django_media_data:/usr/share/nginx/html/media
+    depends_on:
+      - django
+
+volumes:
+
+  postgres_data:
+  redis_data:
+  django_static_data:
+  django_media_data:

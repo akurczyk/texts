@@ -1,8 +1,7 @@
 .DS_Store
 .idea/
 /venv
-.env.db
-.env.django
+.env
 __pycache__/
 /app/db.sqlite3
 /app/media
