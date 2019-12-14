@@ -159,5 +159,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Celery settings
 
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER', 'redis://localhost:6379')
 CELERY_BACKEND_URL = os.environ.get('CELERY_BACKEND', 'redis://localhost:6379')
-CELERY_BROKER_URL = os.environ.get('CELERY_BACKEND', 'redis://localhost:6379')
