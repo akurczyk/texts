@@ -2,7 +2,7 @@ amqp==2.5.1
 argh==0.26.2
 billiard==3.6.1.0
 celery==4.3.0
-Django==2.2.6
+Django==2.2.20
 django-bootstrap-form==3.4
 gunicorn==19.9.0
 imgkit==1.0.2
